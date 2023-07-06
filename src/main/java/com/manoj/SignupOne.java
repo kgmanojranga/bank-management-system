@@ -208,7 +208,7 @@ public class SignupOne extends JFrame implements ActionListener {
             if (name.equals("")) {
                 JOptionPane.showMessageDialog(null, "Name is Required");
             } else {
-                Conn c = new Conn();
+                DatabaseConnection c = new DatabaseConnection();
                 String query = "INSERT INTO signup VALUES('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + eMail + "','" + maritalStatus + "','" +  address + "','" + city + "','" + province +"','" + pincode + "')";
                 c.st.executeUpdate(query);
 
@@ -218,9 +218,7 @@ public class SignupOne extends JFrame implements ActionListener {
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
-
     public static void main(String[] a){
         new SignupOne();
     }

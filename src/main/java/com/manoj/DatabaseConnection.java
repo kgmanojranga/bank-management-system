@@ -1,16 +1,18 @@
 package com.manoj;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.DriverManager;
 
-public class Conn {
+public class DatabaseConnection {
 
     Connection con;
     Statement st;
     String url = "jdbc:mysql://localhost:3306/bankmanagementsystem";
     String username = "root";
     String password = "root";
-    public Conn() {
+    public DatabaseConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection( url, username, password);
             st = con.createStatement();
         } catch (Exception e){
