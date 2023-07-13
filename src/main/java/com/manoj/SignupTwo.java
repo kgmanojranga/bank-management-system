@@ -173,11 +173,11 @@ public class SignupTwo extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         String formno = "" + this.formno;
-        String religion = (String)religionBox.getSelectedItem();
-        String category = (String)categoryBox.getSelectedItem();
-        String income = (String)incomeBox.getSelectedItem();
-        String education = (String)educationBox.getSelectedItem();
-        String occupation = (String)occupationBox.getSelectedItem();
+        String religion = (String) religionBox.getSelectedItem();
+        String category = (String) categoryBox.getSelectedItem();
+        String income = (String) incomeBox.getSelectedItem();
+        String education = (String) educationBox.getSelectedItem();
+        String occupation = (String) occupationBox.getSelectedItem();
         String pan = panTextField.getText();
         String id = idTextField.getText();
         String isSenior = null;
@@ -198,17 +198,15 @@ public class SignupTwo extends JFrame implements ActionListener {
 
         try {
             DatabaseConnection c = new DatabaseConnection();
-            String query = "INSERT INTO signupTwo VALUES('" + formno + "','" + religion + "','" + category + "','" + income + "','" + education + "','" + occupation + "','" + pan + "','" +  id + "','" + isSenior + "','" + existingAccount + "')";
+            String query = "INSERT INTO signupTwo VALUES('" + formno + "','" + religion + "','" + category + "','" + income + "','" + education + "','" + occupation + "','" + pan + "','" + id + "','" + isSenior + "','" + existingAccount + "')";
             c.st.executeUpdate(query);
+
+            this.setVisible(false);
+            new SignupThree(formno);
         } catch (Exception e) {
             System.out.println(e);
         }
 
-    }
-
-
-    public static void main(String[] a){
-        new SignupTwo("");
     }
 }
 
