@@ -219,7 +219,4 @@ public class SignupOne extends JFrame implements ActionListener {
             System.out.println(e);
         }
     }
-    public static void main(String[] a){
-        new SignupOne();
-    }
 }
