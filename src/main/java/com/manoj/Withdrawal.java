@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -66,13 +67,29 @@ public class Withdrawal extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter the amount you want to Withdraw");
             } else {
                 DatabaseConnection connection = new DatabaseConnection();
-                String query1 = "INSERT INTO bank VALUES('" + pinnumber + "','" + date + "','Withdraw','" + withdrawAmount + "');";
-                System.out.println("Deposit works until this");
+
                 try {
-                    connection.st.executeUpdate(query1);
-                    JOptionPane.showMessageDialog(null, "Rs. " + withdrawAmount + " withdrawn successfully");
-                    this.setVisible(false);
-                    new Transaction(pinnumber).setVisible(true);
+                    ResultSet resultSet = connection.st.executeQuery("SELECT * FROM bank WHERE pin = '" + pinnumber + "';");
+                    int balance = 0;
+                    while(resultSet.next()) {
+                        if (resultSet.getString("type").equals("Deposit")) {
+                            balance += Integer.parseInt(resultSet.getString("amount"));
+                        } else {
+                            balance -= Integer.parseInt(resultSet.getString("amount"));
+                        }
+                    }
+
+                    if(balance > Integer.parseInt(withdrawAmount)){
+                        String query1 = "INSERT INTO bank VALUES('" + pinnumber + "','" + date + "','Withdraw','" + withdrawAmount + "');";
+                        connection.st.executeUpdate(query1);
+                        JOptionPane.showMessageDialog(null, "Rs. " + withdrawAmount + " withdrawn successfully");
+                        this.setVisible(false);
+                        new Transaction(pinnumber).setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Insufficient account balance");
+                    }
+
+
                 } catch (SQLException exception) {
                     System.out.println(exception);
                 }
